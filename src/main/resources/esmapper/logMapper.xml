@@ -1,0 +1,239 @@
+<properties>
+
+
+    <property name="searchPagineDatas">
+        <![CDATA[{
+            "query": {
+                "bool": {
+                    "must": [
+                        {  ## 多值检索，查找多个应用名称对应的文档记录
+                            "match_phrase": {
+                                "MESSAGE": #[type]
+                            }
+                        },
+                        {   ## 时间范围检索，返回对应时间范围内的记录，接受long型的值
+                            "range": {
+                                "TIMESTAMP": {
+                                    "gte": #[startTime],##统计开始时间
+                                    "lt": #[endTime]  ##统计截止时间
+                                }
+                            }
+                        }
+                    ]
+                }
+            },
+            ## 分页起点
+            "from":#[from],
+            ## 最多返回size条记录
+            "size":#[size],
+            "sort": [
+            {
+              "TIMESTAMP": {
+              "order": "desc"
+                  }
+             }
+                    ],
+             "highlight": {
+              "pre_tags": [
+                    "<span style=\"color:#F56C6C\">"
+                         ],
+              "post_tags": [
+                    "</span>"
+                           ],
+              "fields": {
+              "MESSAGE":{}
+              },
+              "fragment_size": 2147483647
+  }
+        }]]>
+    </property>
+
+    <property name="searchBar">
+        <![CDATA[
+         {
+
+            "query": {
+             "bool": {
+               "must": [
+                {"match_phrase": {"MESSAGE": #[type]}},
+                {"range": {
+                 "TIMESTAMP": {
+                  "gte": #[startTime],
+                  "lte": #[endTime]
+                }
+              }}
+             ]
+            }
+
+          }
+            ,"size": 0
+            ,"aggs": {
+           "groupDate": {
+        "date_histogram": {
+        "field": "TIMESTAMP",
+        "interval": #[timeInterval]
+        }
+       }
+      }
+         }
+        ]]>
+    </property>
+
+    <property name="searchGateWayData">
+        <![CDATA[
+
+             {
+  "query": {
+    "bool": {
+      "must": [
+        {"match_phrase": {"MESSAGE": #[type]}},
+              {"range": {
+        "TIMESTAMP": {
+          "gte": #[startTime],
+          "lte": #[endTime]
+        }
+      }}
+      ]
+    }
+  },
+  "highlight": {
+              "pre_tags": [
+                    "<font style=\"color:#F56C6C\">"
+                         ],
+              "post_tags": [
+                    "</font>"
+                           ],
+      "fields": {
+        "MESSAGE":{
+
+        }
+      }
+  },
+  "from": #[from],
+  "size": #[size]
+  , "sort": [
+    {
+      "TIMESTAMP": {
+        "order": "desc"
+      }
+    }
+  ]
+
+}
+
+        ]]>
+    </property>
+
+    <property name="searchGateWayBar">
+        <![CDATA[
+         {
+
+            "query": {
+             "bool": {
+               "must": [
+                {"match_phrase": {"MESSAGE": #[type]}},
+                {"range": {
+                 "TIMESTAMP": {
+                  "gte": #[startTime],
+                  "lte": #[endTime]
+                }
+              }}
+             ]
+            }
+
+          }
+            ,"size": 0
+            ,"aggs": {
+           "groupDate": {
+        "date_histogram": {
+        "field": "TIMESTAMP",
+        "interval": #[timeInterval]
+        }
+       }
+      }
+         }
+        ]]>
+    </property>
+
+    <property name="searchSecurityData">
+        <![CDATA[
+
+        {
+
+        "query": {
+         "bool": {
+           "must": [
+          {"match_phrase": {
+          "MSG": #[type]
+           }},
+           {"range": {
+          "TIMESTAMP": {
+            "gte": #[startTime],
+            "lt": #[endTime]
+          }
+          }}
+         ]
+       }
+        },
+          "from": #[from],
+          "size": #[size],
+            "highlight": {
+                   "pre_tags": [
+                    "<font style=\"color:#F56C6C\">"
+                         ],
+              "post_tags": [
+                    "</font>"
+                           ],
+    "fields": {
+      "MSG":{
+
+      }
+    }
+  },
+          "sort": [
+         {
+      "TIMESTAMP": {
+        "order": "desc"
+      }
+    }
+      ]
+
+
+        }
+
+        ]]>
+    </property>
+
+    <property name="searchSecurityBar">
+
+        {
+        "query": {
+        "bool": {
+        "must": [
+        {"match_phrase": {
+        "MSG": #[type]
+        }},
+        {"range": {
+        "TIMESTAMP": {
+        "gte": #[startTime],
+        "lt": #[endTime]
+
+        }
+        }}
+        ]
+        }
+        },
+        "size": 0,
+        "aggs": {
+        "groupDate": {
+        "date_histogram": {
+        "field": "TIMESTAMP",
+        "interval": #[timeInterval]
+        }
+        }
+        }
+        }
+
+    </property>
+
+</properties>

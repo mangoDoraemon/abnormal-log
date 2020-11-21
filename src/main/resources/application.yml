@@ -1,0 +1,41 @@
+server:
+  port: 8088
+spring:
+  resources:
+    static-locations: classpath:/static/
+  thymeleaf:
+    prefix: classpath:/templates/
+  elasticsearch:
+    bboss:
+      elasticUser:
+      elasticPassword:
+      elasticsearch:
+        rest:
+          hostNames: 10.76.253.79:24100,10.76.253.80:24100,10.76.253.81:24100
+        dateFormat: yyyy-MM-dd hh:mm:ss
+        timeZone: Asia/Shanghai
+        ttl: 2d
+        showTemplate: true
+        discoverHost: false
+      dslfile:
+        refreshInterval: -1
+      http:
+        timeoutConnection: 400000
+        timeoutSocket: 400000
+        connectionRequestTimeout: 400000
+        retryTime: 1
+        maxLineLength: -1
+        maxHeaderCount: 200
+        maxTotal: 400
+        defaultMaxPerRoute: 200
+        soReuseAddress: false
+        soKeepAlive: false
+        timeToLive: 3600000
+        keepAlive: 3600000
+        keystore:
+        keyPassword:
+        hostnameVerifier:
+
+es:
+  basePath: esmapper/
+  index: logMapper
